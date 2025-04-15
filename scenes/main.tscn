@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=3 uid="uid://mbog53gxjj5w"]
+
+[ext_resource type="Script" uid="uid://cvgdy1ywyjum0" path="res://scripts/squisher.gd" id="1_0wfyh"]
+[ext_resource type="Texture2D" uid="uid://5ytor85nh2e7" path="res://sprites/circle.png" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://ghqsfxxbyfrj" path="res://scripts/ball.gd" id="1_sugp2"]
+[ext_resource type="Texture2D" uid="uid://cmrartl8ltw52" path="res://sprites/white.png" id="1_tbgi4"]
+[ext_resource type="Script" uid="uid://d3b6rgu1pvggm" path="res://scripts/debug_spawner.gd" id="1_tefeu"]
+[ext_resource type="Texture2D" uid="uid://cwhk5tkxkvg2q" path="res://sprites/arrow_head.png" id="2_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://b5566pehhm135" path="res://prefabs/debug_spawn.tscn" id="2_o6xl0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
+size = Vector2(1138, 100)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tbgi4"]
+friction = 0.0
+bounce = 0.8
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jyhfs"]
+radius = 51.0098
+
+[node name="main" type="Node2D"]
+
+[node name="debug_spawner" type="Node2D" parent="."]
+script = ExtResource("1_tefeu")
+debug_spawn = ExtResource("2_o6xl0")
+
+[node name="arena" type="Node2D" parent="."]
+
+[node name="wall" type="StaticBody2D" parent="arena"]
+position = Vector2(575, 0)
+
+[node name="shape" type="CollisionShape2D" parent="arena/wall"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="sprite" type="Sprite2D" parent="arena/wall"]
+self_modulate = Color(0.26789, 0.173512, 0.430582, 1)
+scale = Vector2(11.44, 1)
+texture = ExtResource("1_tbgi4")
+
+[node name="wall2" type="StaticBody2D" parent="arena"]
+position = Vector2(575, 641)
+
+[node name="shape" type="CollisionShape2D" parent="arena/wall2"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="sprite" type="Sprite2D" parent="arena/wall2"]
+self_modulate = Color(0.26789, 0.173512, 0.430582, 1)
+scale = Vector2(11.44, 1)
+texture = ExtResource("1_tbgi4")
+
+[node name="wall3" type="StaticBody2D" parent="arena"]
+position = Vector2(2, 330)
+rotation = 1.5708
+
+[node name="shape" type="CollisionShape2D" parent="arena/wall3"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="sprite" type="Sprite2D" parent="arena/wall3"]
+self_modulate = Color(0.26789, 0.173512, 0.430582, 1)
+scale = Vector2(11.44, 1)
+texture = ExtResource("1_tbgi4")
+
+[node name="wall4" type="StaticBody2D" parent="arena"]
+position = Vector2(1153, 332)
+rotation = 1.5708
+
+[node name="shape" type="CollisionShape2D" parent="arena/wall4"]
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="sprite" type="Sprite2D" parent="arena/wall4"]
+self_modulate = Color(0.26789, 0.173512, 0.430582, 1)
+scale = Vector2(11.44, 1)
+texture = ExtResource("1_tbgi4")
+
+[node name="ball" type="RigidBody2D" parent="." node_paths=PackedStringArray("velocity_squisher", "impact_squisher")]
+position = Vector2(588, 298)
+input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_tbgi4")
+gravity_scale = 0.02
+contact_monitor = true
+max_contacts_reported = 10
+script = ExtResource("1_sugp2")
+velocity_squisher = NodePath("velocity_squisher")
+impact_squisher = NodePath("velocity_squisher/pivot/impact_squisher")
+
+[node name="shape" type="CollisionShape2D" parent="ball"]
+shape = SubResource("CircleShape2D_jyhfs")
+
+[node name="arrow" type="Node2D" parent="ball"]
+
+[node name="head" type="Sprite2D" parent="ball/arrow"]
+self_modulate = Color(0.942478, 0.878378, 0.714164, 1)
+position = Vector2(100, 0)
+rotation = 1.5708
+scale = Vector2(0.611634, 1.45826)
+texture = ExtResource("2_jyhfs")
+
+[node name="velocity_squisher" type="Node2D" parent="ball"]
+script = ExtResource("1_0wfyh")
+
+[node name="pivot" type="Node2D" parent="ball/velocity_squisher"]
+
+[node name="impact_squisher" type="Node2D" parent="ball/velocity_squisher/pivot"]
+script = ExtResource("1_0wfyh")
+
+[node name="pivot" type="Node2D" parent="ball/velocity_squisher/pivot/impact_squisher"]
+
+[node name="sprite" type="Sprite2D" parent="ball/velocity_squisher/pivot/impact_squisher/pivot"]
+self_modulate = Color(0.843195, 0.74553, 0.823404, 1)
+texture = ExtResource("1_o5qli")
