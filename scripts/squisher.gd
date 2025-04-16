@@ -14,7 +14,7 @@ func apply_impulse(normal, force):
     rotation_degrees += 90.0
     pivot.rotation = -rotation
     scale.x *= 1.0 + sqrt(force)
-    scale.y = max(0.1, 1.0/scale.x)
+    scale.y = max(0.1, 2.0 - scale.x)
 
 func set_force(direction, force):
     up_direction = direction
@@ -23,17 +23,17 @@ func set_force(direction, force):
 
     spring_destination = 1.0 + sqrt(force)
 
-func _process(_delta: float) -> void:
-    spring()
+func _process(delta: float) -> void:
+    spring(delta)
 
 
-func spring() -> void:
+func spring(delta) -> void:
     var distance_to_destination = scale.x - spring_destination
-    var loss = spring_damping * spring_velocity
+    var loss = spring_damping * spring_velocity * delta * 100.0
 
     var force = -spring_rigidness * distance_to_destination - loss
     spring_velocity += force
     scale.x += spring_velocity
-    scale.y = max(0.1, 1.0/scale.x)
+    scale.y = max(0.1, 2.0 - scale.x)
 
 
