@@ -24,8 +24,8 @@ func _ready() -> void:
 	start_shape_radius = shape.shape.radius
 
 func _process(_delta):
-
-	shape.shape.radius = start_shape_radius * (1.0 - linear_velocity.length() / 5000.0)
+	var size_of_ball_collider_affected_by_velocity_mult = 1.0/5000.0
+	shape.shape.radius = start_shape_radius * (1.0 - linear_velocity.length() * size_of_ball_collider_affected_by_velocity_mult)
 
 	if mouse_captured:
 		var mouse_screen_pos_to = get_global_mouse_position()
@@ -41,11 +41,13 @@ func _process(_delta):
 			mouse_captured = false
 			shoot = false
 
-			impact_squisher.apply_impulse(direction, distance / 1000)
+			var impulse_force_when_shoot_mult = 1.0/1000.0
+			impact_squisher.apply_impulse(direction, distance * impulse_force_when_shoot_mult)
 	else:
 		arrow.visible = false
 
-	velocity_squisher.set_force(linear_velocity.normalized(), linear_velocity.length() / 10000.0)
+	var velocity_squish_mult = 1.0/10000.0
+	velocity_squisher.set_force(linear_velocity.normalized(), linear_velocity.length() * velocity_squish_mult)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
@@ -54,4 +56,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		debug_spawner.spawn(collision_point)
 		var normal = (collision_point - global_position).normalized()
 		impact_squisher.apply_impulse(normal, linear_velocity.length() / 2000.0)
-		break
+
+		var other_node = state.get_contact_collider_object(i)
+		if other_node is Node2D and other_node.is_in_group('breakable'):
+			other_node.take_damage()
+		

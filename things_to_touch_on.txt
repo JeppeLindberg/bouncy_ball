@@ -1,0 +1,15 @@
+
+
+
+
+Squish and stretch of ball
+
+Hide debug shapes
+
+
+Physics dialiation
+
+Damage of ball dependant on speed
+
+Juice
+

@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://b5566pehhm135"]
+[gd_scene load_steps=3 format=3 uid="uid://b5566pehhm135"]
 
 [ext_resource type="Texture2D" uid="uid://5ytor85nh2e7" path="res://sprites/circle.png" id="1_4njsw"]
+[ext_resource type="Script" uid="uid://du14w8pjt70pf" path="res://scripts/debug_spawn.gd" id="1_u4h42"]
 
 [node name="spawn" type="Node2D"]
+script = ExtResource("1_u4h42")
 
 [node name="sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.209195, 0.209195)

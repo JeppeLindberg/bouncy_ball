@@ -14,7 +14,7 @@ func apply_impulse(normal, force):
     rotation_degrees += 90.0
     pivot.rotation = -rotation
     scale.x *= 1.0 + sqrt(force)
-    scale.y = max(0.1, 2.0 - scale.x)
+    scale.y = max(0.1, 1.0/scale.x)
 
 func set_force(direction, force):
     up_direction = direction
@@ -34,6 +34,6 @@ func spring() -> void:
     var force = -spring_rigidness * distance_to_destination - loss
     spring_velocity += force
     scale.x += spring_velocity
-    scale.y = max(0.1, 2.0 - scale.x)
+    scale.y = max(0.1, 1.0/scale.x)
 
 
