@@ -9,7 +9,7 @@ var _patterns := preload("res://scripts/library/patterns.gd").new()
 var patterns = {}
 var name_prefab_map = {}
 
-var curr_pattern = 2
+var curr_pattern = 1
 var curr_pattern_time = 0.0
 var charge_time = 0.0
 

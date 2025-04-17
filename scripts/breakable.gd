@@ -3,9 +3,14 @@ extends RigidBody2D
 @export var health = 2
 
 @onready var sprite = get_node('sprite')
+var behaviour : Node2D
 
 func _ready() -> void:
     add_to_group('breakable')
+    for child in get_children():
+        if child.is_in_group('behaviour'):
+            behaviour = child
+            break
 
 func take_damage():
     health -= 1

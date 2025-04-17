@@ -6,6 +6,9 @@ extends Node2D
 @export var move_direction = Vector2.LEFT
 
 
+func _ready() -> void:
+    add_to_group('behaviour')
+
 func _physics_process(_delta: float) -> void:    
     rigidbody.apply_force(move_direction * 10000.0 * movement_speed_mult)
 
