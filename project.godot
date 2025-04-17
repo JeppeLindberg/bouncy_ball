@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="ogam_46"
+config/name="Ballcracker"
 run/main_scene="uid://mbog53gxjj5w"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
