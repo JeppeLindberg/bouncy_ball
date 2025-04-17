@@ -9,6 +9,7 @@ script = ExtResource("1_8j7ta")
 [node name="pivot" type="Node2D" parent="."]
 
 [node name="sprite" type="Sprite2D" parent="pivot"]
-self_modulate = Color(0.942478, 0.878378, 0.714164, 1)
+self_modulate = Color(0.757841, 0.901562, 0.866346, 1)
+z_index = 10
 scale = Vector2(0.660389, 0.660389)
 texture = ExtResource("2_6pup3")

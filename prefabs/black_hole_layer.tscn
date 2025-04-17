@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://btaivh2rvd3co"]
+
+[ext_resource type="Script" uid="uid://dtomnhxmlv67k" path="res://scripts/black_hole_layer.gd" id="1_7kuyp"]
+[ext_resource type="Texture2D" uid="uid://cei4bcpe8s2f6" path="res://sprites/white_border.png" id="2_3io8p"]
+
+[node name="layer" type="Node2D"]
+script = ExtResource("1_7kuyp")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="sprite" type="Sprite2D" parent="pivot"]
+self_modulate = Color(0.054902, 0, 0.14902, 1)
+scale = Vector2(0.660389, 0.660389)
+texture = ExtResource("2_3io8p")

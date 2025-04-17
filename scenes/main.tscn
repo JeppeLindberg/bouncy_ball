@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://mbog53gxjj5w"]
+[gd_scene load_steps=25 format=3 uid="uid://mbog53gxjj5w"]
 
 [ext_resource type="Script" uid="uid://cvgdy1ywyjum0" path="res://scripts/squisher.gd" id="1_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://5ytor85nh2e7" path="res://sprites/circle.png" id="1_o5qli"]
@@ -13,9 +13,16 @@
 [ext_resource type="Script" uid="uid://bjpeqw2sg0pj3" path="res://scripts/zone_rectangular.gd" id="4_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://c0ddydalrmuvq" path="res://prefabs/breakable_rectangle_2.tscn" id="5_eb6dy"]
 [ext_resource type="Script" uid="uid://ci3dem67gdiq2" path="res://scripts/zone_circular.gd" id="7_trceg"]
+[ext_resource type="Texture2D" uid="uid://xmwnbx52824y" path="res://sprites/light.png" id="9_0ld40"]
 [ext_resource type="Script" uid="uid://3y31jido348o" path="res://scripts/power_stacks.gd" id="12_jbj1t"]
 [ext_resource type="PackedScene" uid="uid://dwcc0c5o6etl7" path="res://prefabs/stack.tscn" id="13_jkv2x"]
 [ext_resource type="Script" uid="uid://3fd301wqqkfv" path="res://scripts/black_hole.gd" id="14_jbj1t"]
+[ext_resource type="Script" uid="uid://lt1x0c0swoy5" path="res://scripts/black_hole_visual.gd" id="15_muem4"]
+[ext_resource type="PackedScene" uid="uid://btaivh2rvd3co" path="res://prefabs/black_hole_layer.tscn" id="16_dp3eg"]
+
+[sub_resource type="Gradient" id="Gradient_jbj1t"]
+offsets = PackedFloat32Array(0, 0.228395, 0.481481, 0.746914, 1)
+colors = PackedColorArray(0.859934, 0.600373, 0.884984, 1, 0.851639, 0.653071, 0.570923, 1, 0.589577, 0.768573, 0.515053, 1, 0.490455, 0.744907, 0.845848, 1, 0.858824, 0.6, 0.886275, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
 size = Vector2(1557.87, 392.684)
@@ -32,6 +39,14 @@ radius = 18.7883
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_tipki")
+breakable_gradient = SubResource("Gradient_jbj1t")
+
+[node name="background" type="Sprite2D" parent="."]
+self_modulate = Color(0.772209, 0.550024, 1, 1)
+z_index = -200
+position = Vector2(763, 432)
+scale = Vector2(24.6861, 24.6861)
+texture = ExtResource("1_tbgi4")
 
 [node name="center" type="Node2D" parent="."]
 position = Vector2(768, 432)
@@ -146,10 +161,16 @@ impact_squisher = NodePath("velocity_squisher/pivot/impact_squisher")
 [node name="shape" type="CollisionShape2D" parent="ball"]
 shape = SubResource("CircleShape2D_jyhfs")
 
+[node name="light" type="Sprite2D" parent="ball"]
+self_modulate = Color(0.452372, 0.860155, 0.797964, 1)
+z_index = -10
+scale = Vector2(0.48235, 0.48235)
+texture = ExtResource("9_0ld40")
+
 [node name="arrow" type="Node2D" parent="ball"]
 
 [node name="head" type="Sprite2D" parent="ball/arrow"]
-self_modulate = Color(0.942478, 0.878378, 0.714164, 1)
+self_modulate = Color(0.756863, 0.901961, 0.866667, 1)
 position = Vector2(100, 0)
 rotation = 1.5708
 scale = Vector2(0.122, 0.291)
@@ -166,7 +187,8 @@ script = ExtResource("1_0wfyh")
 [node name="pivot" type="Node2D" parent="ball/velocity_squisher/pivot/impact_squisher"]
 
 [node name="sprite" type="Sprite2D" parent="ball/velocity_squisher/pivot/impact_squisher/pivot"]
-self_modulate = Color(0.843195, 0.74553, 0.823404, 1)
+self_modulate = Color(0, 0, 0, 1)
+z_index = 10
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_o5qli")
 
@@ -187,6 +209,10 @@ shape = SubResource("CircleShape2D_jkv2x")
 [node name="sprite" type="Sprite2D" parent="black_hole"]
 self_modulate = Color(0.0553614, 6.83216e-05, 0.149538, 1)
 texture = ExtResource("1_o5qli")
+
+[node name="visual" type="Node2D" parent="black_hole"]
+script = ExtResource("15_muem4")
+layer_prefab = ExtResource("16_dp3eg")
 
 [node name="breakables" type="Node2D" parent="."]
 
