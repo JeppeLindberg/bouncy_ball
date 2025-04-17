@@ -43,6 +43,7 @@ func _process(_delta):
 
 	if aiming:
 		aim_vector += aim_input
+		aim_input = Vector2.ZERO
 		var direction = aim_vector.normalized()
 		var distance = clamp(aim_vector.length(), 0.0, 300.0)
 		arrow.look_at(global_position + direction)
@@ -51,25 +52,25 @@ func _process(_delta):
 		Engine.time_scale = 0.2
 
 		if shoot:
-			if power_stacks.get_no_of_stacks() > 0:
-				last_shoot_time = main.seconds()
+			if distance > 50.0:
+				if power_stacks.get_no_of_stacks() > 0:
+					last_shoot_time = main.seconds()
 
-			var carried_momentum = clamp(linear_velocity.normalized().dot(direction), 0.0, 1.0)
-			linear_velocity = direction * linear_velocity.length() * carried_momentum
-			var force_from_power_stacks = power_stacks.get_no_of_stacks()
-			if force_from_power_stacks == 0:
-				force_from_power_stacks = 0.2
-			var impulse_force_when_shoot_mult = 1.0
-			apply_impulse(direction * distance * force_from_power_stacks * impulse_force_when_shoot_mult, Vector2.ZERO)
+				var carried_momentum = clamp(linear_velocity.normalized().dot(direction), 0.0, 1.0)
+				linear_velocity = direction * linear_velocity.length() * carried_momentum
+				var force_from_power_stacks = 0.25 + power_stacks.get_no_of_stacks() * 0.75
+				var impulse_force_when_shoot_mult = 1.0
+				apply_impulse(direction * distance * force_from_power_stacks * impulse_force_when_shoot_mult, Vector2.ZERO)
 
+
+				var squisher_impulse_force_when_shoot_mult = 1.0/1000.0
+				impact_squisher.apply_impulse(direction, distance * force_from_power_stacks * squisher_impulse_force_when_shoot_mult)
+
+				power_stacks.remove_all_stacks()
+
+			Engine.time_scale = 1.0
 			aiming = false
 			shoot = false
-
-			var squisher_impulse_force_when_shoot_mult = 1.0/1000.0
-			impact_squisher.apply_impulse(direction, distance * force_from_power_stacks * squisher_impulse_force_when_shoot_mult)
-			Engine.time_scale = 1.0
-
-			power_stacks.remove_all_stacks()
 	else:
 		arrow.visible = false
 		aim_vector = Vector2.ZERO

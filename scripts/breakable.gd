@@ -15,8 +15,6 @@ func _ready() -> void:
 		if child.is_in_group('behaviour'):
 			behaviour = child
 			break
-	
-	sprite.self_modulate = main.breakable_gradient.sample(fmod(main.seconds() / 10.0, 1.0))
 
 func take_damage():
 	health -= 1

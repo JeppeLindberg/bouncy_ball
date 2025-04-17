@@ -20,9 +20,8 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1536
 window/size/viewport_height=864
 window/size/resizable=false
-window/size/window_width_override=1152
-window/size/window_height_override=648
-window/stretch/scale=0.75
+window/size/window_width_override=1536
+window/size/window_height_override=864
 
 [input]
 

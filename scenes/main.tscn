@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://mbog53gxjj5w"]
+[gd_scene load_steps=33 format=3 uid="uid://mbog53gxjj5w"]
 
 [ext_resource type="Script" uid="uid://cvgdy1ywyjum0" path="res://scripts/squisher.gd" id="1_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://5ytor85nh2e7" path="res://sprites/circle.png" id="1_o5qli"]
@@ -20,6 +20,12 @@
 [ext_resource type="Script" uid="uid://lt1x0c0swoy5" path="res://scripts/black_hole_visual.gd" id="15_muem4"]
 [ext_resource type="PackedScene" uid="uid://btaivh2rvd3co" path="res://prefabs/black_hole_layer.tscn" id="16_dp3eg"]
 [ext_resource type="PackedScene" uid="uid://b5xjinac60md" path="res://prefabs/black_hole_consume.tscn" id="16_gqmmt"]
+[ext_resource type="Script" uid="uid://du5jdqkewpmlo" path="res://scripts/breakable.gd" id="19_jscy8"]
+[ext_resource type="Texture2D" uid="uid://o0076cokhwrc" path="res://sprites/click_and_drag.png" id="20_y6deb"]
+[ext_resource type="Script" uid="uid://23wo7tu4kfaq" path="res://scripts/breakable_tutorial.gd" id="21_pm3ni"]
+[ext_resource type="Texture2D" uid="uid://dx3m3lxaor4qs" path="res://sprites/use_esc_to_uncapture.png" id="22_y6deb"]
+[ext_resource type="Texture2D" uid="uid://c46k81jfnnt44" path="res://sprites/maintain_momentum.png" id="23_og1vs"]
+[ext_resource type="Texture2D" uid="uid://y2y3vfqmr3du" path="res://sprites/have_fun.png" id="24_2wyq8"]
 
 [sub_resource type="Gradient" id="Gradient_jbj1t"]
 offsets = PackedFloat32Array(0, 0.228395, 0.481481, 0.746914, 1)
@@ -37,6 +43,9 @@ radius = 15.0333
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jkv2x"]
 radius = 18.7883
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tipki"]
+size = Vector2(354.072, 24.2792)
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_tipki")
@@ -172,6 +181,7 @@ texture = ExtResource("9_0ld40")
 
 [node name="head" type="Sprite2D" parent="ball/arrow"]
 self_modulate = Color(0.756863, 0.901961, 0.866667, 1)
+z_index = 10
 position = Vector2(100, 0)
 rotation = 1.5708
 scale = Vector2(0.122, 0.291)
@@ -220,6 +230,86 @@ layer_prefab = ExtResource("16_dp3eg")
 position = Vector2(0, 2)
 
 [node name="breakables" type="Node2D" parent="."]
+
+[node name="click_and_drag" type="RigidBody2D" parent="breakables"]
+position = Vector2(768, -61)
+collision_layer = 4
+collision_mask = 0
+mass = 50.0
+gravity_scale = 0.0
+linear_damp = 10.0
+angular_damp = 10.0
+script = ExtResource("19_jscy8")
+
+[node name="shape" type="CollisionShape2D" parent="breakables/click_and_drag"]
+scale = Vector2(2.47125, 2.47125)
+shape = SubResource("RectangleShape2D_tipki")
+
+[node name="sprite" type="Sprite2D" parent="breakables/click_and_drag"]
+texture = ExtResource("20_y6deb")
+
+[node name="behaviour" type="Node2D" parent="breakables/click_and_drag"]
+script = ExtResource("21_pm3ni")
+
+[node name="use_esc_to_uncapture" type="RigidBody2D" parent="breakables"]
+position = Vector2(768, -189)
+collision_layer = 4
+collision_mask = 0
+mass = 50.0
+gravity_scale = 0.0
+linear_damp = 10.0
+angular_damp = 10.0
+script = ExtResource("19_jscy8")
+
+[node name="shape" type="CollisionShape2D" parent="breakables/use_esc_to_uncapture"]
+scale = Vector2(2.47125, 2.47125)
+shape = SubResource("RectangleShape2D_tipki")
+
+[node name="sprite" type="Sprite2D" parent="breakables/use_esc_to_uncapture"]
+texture = ExtResource("22_y6deb")
+
+[node name="behaviour" type="Node2D" parent="breakables/use_esc_to_uncapture"]
+script = ExtResource("21_pm3ni")
+
+[node name="maintain_momentum" type="RigidBody2D" parent="breakables"]
+position = Vector2(768, -317)
+collision_layer = 4
+collision_mask = 0
+mass = 50.0
+gravity_scale = 0.0
+linear_damp = 10.0
+angular_damp = 10.0
+script = ExtResource("19_jscy8")
+
+[node name="shape" type="CollisionShape2D" parent="breakables/maintain_momentum"]
+scale = Vector2(2.47125, 2.47125)
+shape = SubResource("RectangleShape2D_tipki")
+
+[node name="sprite" type="Sprite2D" parent="breakables/maintain_momentum"]
+texture = ExtResource("23_og1vs")
+
+[node name="behaviour" type="Node2D" parent="breakables/maintain_momentum"]
+script = ExtResource("21_pm3ni")
+
+[node name="have_fun" type="RigidBody2D" parent="breakables"]
+position = Vector2(768, -455)
+collision_layer = 4
+collision_mask = 0
+mass = 50.0
+gravity_scale = 0.0
+linear_damp = 10.0
+angular_damp = 10.0
+script = ExtResource("19_jscy8")
+
+[node name="shape" type="CollisionShape2D" parent="breakables/have_fun"]
+scale = Vector2(2.47125, 2.47125)
+shape = SubResource("RectangleShape2D_tipki")
+
+[node name="sprite" type="Sprite2D" parent="breakables/have_fun"]
+texture = ExtResource("24_2wyq8")
+
+[node name="behaviour" type="Node2D" parent="breakables/have_fun"]
+script = ExtResource("21_pm3ni")
 
 [node name="debug_spawner" type="Node2D" parent="."]
 visible = false
