@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5xjinac60md"]
+
+[ext_resource type="Script" uid="uid://cn5mq1ufekvys" path="res://scripts/black_hole_consume.gd" id="1_rsfvn"]
+
+[node name="consume" type="Node2D"]
+script = ExtResource("1_rsfvn")

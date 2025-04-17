@@ -74,7 +74,7 @@ func _process(_delta):
 		arrow.visible = false
 		aim_vector = Vector2.ZERO
 
-	var velocity_squish_mult = 1.0/10000.0
+	var velocity_squish_mult = 1.0/100000.0
 	velocity_squisher.set_force(linear_velocity.normalized(), linear_velocity.length() * velocity_squish_mult)
 
 func _handle_controls():	
@@ -89,7 +89,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		var collision_point = state.get_contact_collider_position(i)
 		debug_spawner.spawn(collision_point)
 		var normal = (collision_point - global_position).normalized()
-		impact_squisher.apply_impulse(normal, linear_velocity.length() / 2000.0)
+		var squisher_impulse_force_when_collide_mult = 1.0/3000.0
+		impact_squisher.apply_impulse(normal, linear_velocity.length() * squisher_impulse_force_when_collide_mult)
 
 		var other_node = state.get_contact_collider_object(i)
 		if other_node is Node2D and other_node.is_in_group('breakable'):

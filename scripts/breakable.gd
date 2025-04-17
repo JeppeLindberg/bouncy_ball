@@ -5,6 +5,7 @@ extends RigidBody2D
 @onready var sprite = get_node('sprite')
 @onready var shape = get_node('shape')
 @onready var main = get_node('/root/main')
+@onready var black_hole = get_node('/root/main/black_hole')
 
 var behaviour : Node2D
 
@@ -30,5 +31,6 @@ func take_damage():
 		return false
 
 func consume_by_black_hole():
+	black_hole.consume_sprite(sprite)
 	queue_free()
 

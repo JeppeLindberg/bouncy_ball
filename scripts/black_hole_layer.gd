@@ -9,8 +9,8 @@ var index = 0
 
 func _ready() -> void:
 	start_color = modulate
-	pivot.rotation_degrees = (-main.seconds() * 10.0) + index * 15.0
+	pivot.rotation_degrees = (-main.seconds() * 5.0) + index * 15.0
 	modulate = start_color * Color(1.0, 1.0, 1.0, index / 100.0)
 
 func _process(_delta: float) -> void:
-	pivot.rotation_degrees = (-main.seconds() * 10.0) + index * 15.0
+	pivot.rotation_degrees = (-main.seconds() * 5.0) + index * 15.0
