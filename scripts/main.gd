@@ -1,5 +1,11 @@
 extends Node2D
 
+
+var _seconds = 0.0
+
+func _process(delta: float) -> void:
+	_seconds += delta
+
 func seconds():
-	return float(Time.get_ticks_msec()) / 1000.0
+	return _seconds
 

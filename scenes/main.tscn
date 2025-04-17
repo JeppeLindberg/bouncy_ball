@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://mbog53gxjj5w"]
+[gd_scene load_steps=21 format=3 uid="uid://mbog53gxjj5w"]
 
 [ext_resource type="Script" uid="uid://cvgdy1ywyjum0" path="res://scripts/squisher.gd" id="1_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://5ytor85nh2e7" path="res://sprites/circle.png" id="1_o5qli"]
@@ -13,6 +13,9 @@
 [ext_resource type="Script" uid="uid://bjpeqw2sg0pj3" path="res://scripts/zone_rectangular.gd" id="4_ya4ey"]
 [ext_resource type="PackedScene" uid="uid://c0ddydalrmuvq" path="res://prefabs/breakable_rectangle_2.tscn" id="5_eb6dy"]
 [ext_resource type="Script" uid="uid://ci3dem67gdiq2" path="res://scripts/zone_circular.gd" id="7_trceg"]
+[ext_resource type="Script" uid="uid://3y31jido348o" path="res://scripts/power_stacks.gd" id="12_jbj1t"]
+[ext_resource type="PackedScene" uid="uid://dwcc0c5o6etl7" path="res://prefabs/stack.tscn" id="13_jkv2x"]
+[ext_resource type="Script" uid="uid://3fd301wqqkfv" path="res://scripts/black_hole.gd" id="14_jbj1t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
 size = Vector2(1557.87, 392.684)
@@ -24,8 +27,14 @@ bounce = 0.8
 [sub_resource type="CircleShape2D" id="CircleShape2D_jyhfs"]
 radius = 15.0333
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_jkv2x"]
+radius = 18.7883
+
 [node name="main" type="Node2D"]
 script = ExtResource("1_tipki")
+
+[node name="center" type="Node2D" parent="."]
+position = Vector2(768, 432)
 
 [node name="camera" type="Camera2D" parent="."]
 position = Vector2(768, 429)
@@ -33,7 +42,7 @@ position = Vector2(768, 429)
 [node name="arena" type="Node2D" parent="camera"]
 
 [node name="wall" type="StaticBody2D" parent="camera/arena"]
-position = Vector2(0, -484)
+position = Vector2(0, -486)
 scale = Vector2(1.25556, 1.05637)
 collision_mask = 2
 
@@ -121,10 +130,8 @@ position = Vector2(191, 100)
 script = ExtResource("7_trceg")
 spawn_angle = 30.0
 
-[node name="breakables" type="Node2D" parent="."]
-
 [node name="ball" type="RigidBody2D" parent="." node_paths=PackedStringArray("velocity_squisher", "impact_squisher")]
-position = Vector2(588, 298)
+position = Vector2(768, 432)
 collision_layer = 3
 collision_mask = 3
 input_pickable = true
@@ -163,6 +170,28 @@ self_modulate = Color(0.843195, 0.74553, 0.823404, 1)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_o5qli")
 
+[node name="power_stacks" type="Node2D" parent="ball"]
+script = ExtResource("12_jbj1t")
+stack_prefab = ExtResource("13_jkv2x")
+
+[node name="black_hole" type="Area2D" parent="."]
+z_index = -100
+position = Vector2(768, 432)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("14_jbj1t")
+
+[node name="shape" type="CollisionShape2D" parent="black_hole"]
+shape = SubResource("CircleShape2D_jkv2x")
+
+[node name="sprite" type="Sprite2D" parent="black_hole"]
+self_modulate = Color(0.0553614, 6.83216e-05, 0.149538, 1)
+texture = ExtResource("1_o5qli")
+
+[node name="breakables" type="Node2D" parent="."]
+
 [node name="debug_spawner" type="Node2D" parent="."]
 script = ExtResource("1_tefeu")
 debug_spawn = ExtResource("2_o6xl0")
+
+[connection signal="body_entered" from="black_hole" to="black_hole" method="_on_body_entered"]

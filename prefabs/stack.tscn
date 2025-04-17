@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwcc0c5o6etl7"]
+
+[ext_resource type="Script" uid="uid://oak1empewx0n" path="res://scripts/stack.gd" id="1_8j7ta"]
+[ext_resource type="Texture2D" uid="uid://cei4bcpe8s2f6" path="res://sprites/white_border.png" id="2_6pup3"]
+
+[node name="stack" type="Node2D"]
+script = ExtResource("1_8j7ta")
+
+[node name="pivot" type="Node2D" parent="."]
+
+[node name="sprite" type="Sprite2D" parent="pivot"]
+self_modulate = Color(0.942478, 0.878378, 0.714164, 1)
+scale = Vector2(0.660389, 0.660389)
+texture = ExtResource("2_6pup3")
